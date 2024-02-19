@@ -1,6 +1,7 @@
 ﻿[
   {
     "FilePath": "Test\\SayHello.exe",
-    "TriggerTime": "30 07 * * *"
+    "TriggerTime": "30 07 * * *",
+    "PythonScriptMode": true
   }
 ]

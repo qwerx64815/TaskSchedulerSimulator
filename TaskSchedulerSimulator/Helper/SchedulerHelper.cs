@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 using NLog;
 using NLog.Web;
 using System.Diagnostics;
-using System.Reflection;
 
 namespace TaskSchedulerSimulator.Helper
 {
@@ -38,6 +37,7 @@ namespace TaskSchedulerSimulator.Helper
             {
                 public string FilePath { get; set; } = string.Empty;
                 public string TriggerTime { get; set; } = string.Empty;
+                public bool PythonScriptMode { get; set; } = false;
             }
             public void GetTaskList()
             {
@@ -114,21 +114,41 @@ namespace TaskSchedulerSimulator.Helper
             {
                 try
                 {
-                    var process = new Process
-                    {
-                        StartInfo = new ProcessStartInfo
-                        {
-                            FileName = TaskInfo.FilePath,
-                            UseShellExecute = false,
-                            CreateNoWindow = false,
-                            WindowStyle = ProcessWindowStyle.Hidden,
-                            RedirectStandardOutput = false, 
-                            RedirectStandardError = false,
-                        },
-                    };
+                    var ProcessInfo = new ProcessStartInfo();
 
-                    process.Start();
-                    process.WaitForExit();
+                    if (TaskInfo.PythonScriptMode)
+                    {
+                        ProcessInfo.FileName = "python";
+                        ProcessInfo.Arguments = $"\"{TaskInfo.FilePath}\"";
+                        ProcessInfo.CreateNoWindow = true;
+                        ProcessInfo.UseShellExecute = false;
+                        ProcessInfo.RedirectStandardOutput = true;
+                        ProcessInfo.RedirectStandardError = true;
+                    }
+                    else
+                    {
+                        ProcessInfo.FileName = TaskInfo.FilePath;
+                        ProcessInfo.CreateNoWindow = true;
+                        ProcessInfo.UseShellExecute = false;
+                        ProcessInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                        ProcessInfo.RedirectStandardOutput = false;
+                        ProcessInfo.RedirectStandardError = false;
+                    }
+
+                    using var _Process = Process.Start(ProcessInfo);
+
+                    if (_Process != null)
+                    {
+                        var Output = _Process.StandardOutput.ReadToEnd();
+                        var Error = _Process.StandardError.ReadToEnd();
+
+                        _Process.WaitForExit();
+
+                        logger.Info($"Output: {Output}");
+
+                        if (!string.IsNullOrEmpty(Error))
+                            logger.Info($"Error: {Error}");
+                    }
                 }
                 catch (Exception e)
                 {
