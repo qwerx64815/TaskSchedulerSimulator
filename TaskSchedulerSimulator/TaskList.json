@@ -1,0 +1,6 @@
+﻿[
+  {
+    "FilePath": "Test\\SayHello.exe",
+    "TriggerTime": "30 07 * * *"
+  }
+]

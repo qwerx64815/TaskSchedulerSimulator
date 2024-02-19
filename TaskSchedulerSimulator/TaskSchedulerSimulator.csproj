@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hangfire" Version="1.8.10" />
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.8.10" />
+    <PackageReference Include="Hangfire.Storage.SQLite" Version="0.4.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Owin" Version="8.0.2" />
+    <PackageReference Include="NLog" Version="5.2.8" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="5.3.8" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.8" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="nlog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ReleaseNote.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TaskList.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Test\SayHello.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Test\SayHello.pdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
