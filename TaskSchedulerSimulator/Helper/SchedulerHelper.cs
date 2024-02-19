@@ -70,19 +70,6 @@ namespace TaskSchedulerSimulator.Helper
                 {
                     if (TaskList.Count != 0)
                     {
-                        //var AssemblyLocation = Assembly.GetExecutingAssembly().Location;
-                        //logger.Info($"Current assembly path: {AssemblyLocation}");
-
-                        //var AssemblyPath = Path.GetDirectoryName(AssemblyLocation);
-                        //if (!Directory.Exists(AssemblyPath))
-                        //{
-                        //    logger.Error($"Current assembly path not found! Path: {AssemblyPath}");
-                        //}
-                        //else
-                        //{
-
-                        //}
-
                         foreach (var Task in TaskList)
                         {
                             var FilePath = Task.FilePath;
